@@ -10,10 +10,21 @@ var mysql = require('mysql');
 
 //////// routes:
 
+/*
+  Add route:
+    crear variable aqui abajito
+    añadir ruta mas abajito
+    añadir html en views/html
+    crear jade en views con include <elhtml>
+    crear ruta.js en routes
+    modificar el form del html
+*/
+
 var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var addpaciente = require('./routes/addpaciente');
+var adddoctor = require('./routes/adddoctor')
 
 var app = express();
 
@@ -53,6 +64,7 @@ app.use('/', index);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/addpaciente', addpaciente);
+app.use('/adddoctor', adddoctor);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
