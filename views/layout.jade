@@ -1,7 +1,9 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+html 
+  include html/head.html
   body
-    block content
+    #wrapper
+      include html/navbar.html
+      #page-wrapper
+        block content 
+    include html/footer.html
