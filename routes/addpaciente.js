@@ -9,13 +9,6 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/', function(req, res, next) {
-  /*var val  = {nombre: req.body.nombre, apellido_paterno: req.body.apellidopaterno,
-              apellido_materno:req.body.apellidomaterno,tipo:'paciente'};
-  var query = req.app.mysql.query('INSERT INTO persona SET ?', val, function(err,res) {
-
-    console.log(query);
-  });
-  res.redirect('..');*/
   var sql = "INSERT INTO persona (nombre,apellido_paterno,apellido_materno,tipo) VALUES (?,?,?,?)";
   var wheres = [req.body.nombre, req.body.apellidopaterno,req.body.apellidomaterno,'paciente'];
   var query1 = req.app.mysql.format(sql, wheres);
