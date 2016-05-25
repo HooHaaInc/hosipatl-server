@@ -32,7 +32,8 @@ var app = express();
 app.use(session({
   secret: "1up3p5i",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {}
 }))
 
 // view engine setup
@@ -53,7 +54,7 @@ app.mysql.connect();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 ////////// setup routes
