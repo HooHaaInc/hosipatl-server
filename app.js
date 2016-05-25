@@ -80,7 +80,7 @@ app.use('/addpaciente', addpaciente);
 app.use('/adddoctor', adddoctor);
 app.use('/tablepacientes', tablepacientes);
 app.use('/tabledoctores', tabledoctores);
-app.use('/viewpaciente/:id', viewpaciente);
+app.use('/viewpaciente', viewpaciente);
 
 app.use('/\*.jade', jaderouter);
 

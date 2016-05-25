@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
       return;
     }
     var locals = {
-      query: { rows: rows, fields: fields, id: "id_Paciente" },
+      query: { rows: rows, fields: fields, id: "Id" },
       href: "/viewpaciente",
       page_title: "Pacientes"
     };

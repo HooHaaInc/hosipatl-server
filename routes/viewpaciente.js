@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 
+  console.log(req.params.id);
   //TODO: SELECT FROM Pacientes
   //recetas, servicios, expediente, hospitalizacion,
   var sql = "SELECT p.id_Persona, p.id_Paciente, p.entidad_serv_salud, p.eps, " +
@@ -24,16 +25,29 @@ router.get('/', function(req, res, next) {
       "LEFT OUTER JOIN Sala sa ON h.id_Sala = sa.id_Sala " +
       "LEFT OUTER JOIN Cama c ON h.id_Cama = c.id_Cama " +
       "WHERE p.id_Paciente = ?";
-  var query = req.app.mysql.format(sql, [req.params.id | 1]);
-  console.log(req.params.id);
+  //TODO: arreglar esto
+  sql = "SELECT p.id_Persona, p.id_Paciente, p.entidad_serv_salud, p.eps, " +
+      "pe.nombre, pe.apellido_paterno, pe.apellido_materno " +
+      "FROM Paciente p " +
+      "INNER JOIN Persona pe ON p.id_Persona = pe.id_Persona " +
+      "WHERE p.id_Paciente = ?";
+  var query = req.app.mysql.format(sql, [req.params.id || 1]);
+  console.log("query: ", query);
   req.app.mysql.query(query, function(err, rows, fields){
-    if(err){
+    if(err || rows.length == 0){
       res.render('error', {
-        message: err.message,
+        message: err ? err.message : "no rows",
         error: err
       });
     }else
-      res.render("table_view", {query: {rows: rows, fields: fields}}, function(err, html){
+      var locals = {
+        nombre: rows[0].nombre,
+        apellido_paterno: rows[0].apellido_paterno,
+        apellido_materno: rows[0].apellido_materno,
+        entidad_serv_salud: rows[0].entidad_serv_salud,
+        eps: rows[0].eps ? "si" : "no"
+      }
+      res.render("view_paciente", locals, function(err, html){
         if(err)
           res.render('error', {
             message: err.message,
