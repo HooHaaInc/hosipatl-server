@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 
   //TODO: SELECT FROM Pacientes
   //recetas, servicios, expediente, hospitalizacion,
@@ -32,13 +32,20 @@ router.get('/', function(req, res, next) {
   var query = req.app.mysql.format(sql, [req.params.id || 1]);
   console.log(req.params.id);
   req.app.mysql.query(query, function(err, rows, fields){
-    if(err){
+    if(err || rows.length == 0){
       res.render('error', {
-        message: err.message,
+        message: err ? err.message : "no rows",
         error: err
       });
-    }else
-      res.render("table_view", {query: {rows: rows, fields: fields}}, function(err, html){
+    }else{
+      var locals = {
+        nombre: rows[0].nombre,
+        apellido_paterno: rows[0].apellido_paterno,
+        apellido_materno: rows[0].apellido_materno,
+        especialidad: rows[0].especialidad,
+        cedula_profesional: rows[0].cedula_profesional
+      }
+      res.render("view_medico", locals, function(err, html){
         if(err)
           res.render('error', {
             message: err.message,
@@ -46,6 +53,7 @@ router.get('/', function(req, res, next) {
           });
         else res.send(html);
       })
+    }
   })
 });
 

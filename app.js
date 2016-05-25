@@ -28,6 +28,7 @@ var adddoctor = require('./routes/adddoctor');
 var tablepacientes = require('./routes/tablepacientes');
 var tabledoctores = require('./routes/tabledoctores');
 var viewpaciente = require('./routes/viewpaciente');
+var viewmedico = require('./routes/viewmedico');
 
 /*
   visualizar views:
@@ -81,6 +82,7 @@ app.use('/adddoctor', adddoctor);
 app.use('/tablepacientes', tablepacientes);
 app.use('/tabledoctores', tabledoctores);
 app.use('/viewpaciente', viewpaciente);
+app.use('/viewmedico', viewmedico);
 
 app.use('/\*.jade', jaderouter);
 

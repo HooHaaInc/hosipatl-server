@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   "ON me.id_Persona = pe.id_Persona";
   req.app.mysql.query(query, function(err, rows, fields){
     var locals = {
-      query: { rows: rows, fields: fields, id:"id_Medico" },
+      query: { rows: rows, fields: fields, id:"Id" },
       href: "/viewmedico",
       page_title: "Medicos"
     };

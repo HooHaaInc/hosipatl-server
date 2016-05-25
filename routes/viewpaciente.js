@@ -39,7 +39,7 @@ router.get('/:id', function(req, res, next) {
         message: err ? err.message : "no rows",
         error: err
       });
-    }else
+    }else{
       var locals = {
         nombre: rows[0].nombre,
         apellido_paterno: rows[0].apellido_paterno,
@@ -55,6 +55,7 @@ router.get('/:id', function(req, res, next) {
           });
         else res.send(html);
       })
+    }
   })
 });
 
