@@ -24,7 +24,16 @@ var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var addpaciente = require('./routes/addpaciente');
-var adddoctor = require('./routes/adddoctor')
+var adddoctor = require('./routes/adddoctor');
+
+/*
+  visualizar views:
+    crear archivo.jade en /views
+    npm start
+    localhost:3000/archivo.jade
+*/
+
+var jaderouter = require('./routes/jaderouter');
 
 var app = express();
 
@@ -66,6 +75,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/addpaciente', addpaciente);
 app.use('/adddoctor', adddoctor);
+app.use('/\*.jade', jaderouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
