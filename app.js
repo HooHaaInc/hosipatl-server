@@ -25,6 +25,7 @@ var login = require('./routes/login');
 var logout = require('./routes/logout');
 var addpaciente = require('./routes/addpaciente');
 var adddoctor = require('./routes/adddoctor');
+var tablepacientes = require('./routes/tablepacientes');
 
 /*
   visualizar views:
@@ -75,6 +76,8 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/addpaciente', addpaciente);
 app.use('/adddoctor', adddoctor);
+app.use('/tablepacientes', tablepacientes);
+
 app.use('/\*.jade', jaderouter);
 
 // catch 404 and forward to error handler

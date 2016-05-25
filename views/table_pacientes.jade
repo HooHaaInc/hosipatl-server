@@ -1,0 +1,30 @@
+extends ./layout.jade
+
+block content
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Pacientes
+      ///.col-lg-12
+    ///.row
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading 
+          ///.panel-heading
+          .panel-body
+            .dataTable_wrapper
+              table.table.table-striped.table-bordered.table-hover(id="dataTables-example")
+                thead
+                  tr
+                    - for(var i=0; i<query.fields.length; i++)
+                      th #{query.fields[i].name}
+                  
+                tbody
+                  - for(var i=0; i<query.rows.length; i++)
+                    tr(class=i%2==0?"even gradeA":"odd gradeA")
+                      - for(var j=0; j<query.fields.length; j++)
+                        th #{query.rows[i][query.fields[j].name]}
+                        
+block footer
+  include html/tables_footer.html
