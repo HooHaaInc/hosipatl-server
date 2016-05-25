@@ -26,6 +26,8 @@ var logout = require('./routes/logout');
 var addpaciente = require('./routes/addpaciente');
 var adddoctor = require('./routes/adddoctor');
 var tablepacientes = require('./routes/tablepacientes');
+var tabledoctores = require('./routes/tabledoctores');
+var viewpaciente = require('./routes/viewpaciente');
 
 /*
   visualizar views:
@@ -40,7 +42,7 @@ var app = express();
 
 //app session
 app.use(session({
-  secret: "1up3p5i",
+  secret: "1up3p5i🐨",
   resave: false,
   saveUninitialized: false,
   cookie: {}
@@ -77,6 +79,8 @@ app.use('/logout', logout);
 app.use('/addpaciente', addpaciente);
 app.use('/adddoctor', adddoctor);
 app.use('/tablepacientes', tablepacientes);
+app.use('/tabledoctores', tabledoctores);
+app.use('/viewpaciente/:id', viewpaciente);
 
 app.use('/\*.jade', jaderouter);
 

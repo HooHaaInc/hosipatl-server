@@ -4,7 +4,7 @@ block content
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header Pacientes
+        h1.page-header #{page_title}
       ///.col-lg-12
     ///.row
     .row
@@ -22,9 +22,13 @@ block content
                   
                 tbody
                   - for(var i=0; i<query.rows.length; i++)
-                    tr(class=i%2==0?"even gradeA":"odd gradeA")
+                    tr(class=i%2==0?"even gradeA clickable-row":"odd gradeA clickable-row", data-tableid=query.rows[i][query.id], data-href=href)
                       - for(var j=0; j<query.fields.length; j++)
                         th #{query.rows[i][query.fields[j].name]}
                         
 block footer
   include html/tables_footer.html
+  script.
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href") + "/" + $(this).data("tableid");
+    });

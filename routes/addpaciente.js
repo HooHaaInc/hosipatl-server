@@ -11,15 +11,47 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
+  var datos = {
+    nombre: req.body.nombre,
+    apellido_paterno: req.body.apellidopaterno,
+    apellido_materno: req.body.apellidomaterno,
+    tipo: "paciente"
+  };
+  var sql = 'INSERT INTO Persona SET ?';
+  var query = req.app.mysql.format(sql, datos);
+  console.log("query: ", query);
   var smn = true;
-  req.app.mysql.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-    if (err){
-       res.send(err);
-       smn = false;
-     }
-    console.log('The solution is: ', rows[0].solution);
+  req.app.mysql.query(query, function(err, result) {
+    if(err){
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+      return;
+    }
+    console.log('The solution is: ', result);
+    var datos = {
+      id_Persona: result.insertId,
+      entidad_serv_salud: req.body.ess,
+      eps: req.body.eps ? true : false,
+    };
+    var sql = 'INSERT INTO Paciente SET ?';
+    var query = req.app.mysql.format(sql, datos);
+    req.app.mysql.query(query, function(err, result) {
+      if(err){
+        res.render('error', {
+          message: err.message,
+          error: err
+        });
+
+        //TODO: borrar registro en persona porque no se pudo insertar paciente
+
+      }else{
+        console.log("ea: ", result);
+        res.redirect("/");
+      }
+    })
   });
-  if(smn) res.redirect('..');
 })
 
 module.exports = router;
