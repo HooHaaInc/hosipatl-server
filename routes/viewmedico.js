@@ -24,8 +24,12 @@ router.get('/', function(req, res, next) {
       "LEFT OUTER JOIN Sala sa ON h.id_Sala = sa.id_Sala " +
       "LEFT OUTER JOIN Cama c ON h.id_Cama = c.id_Cama " +
       "WHERE p.id_Paciente = ?";*/
-  var sql = "SELECT id_persona, especialidad, cedula_profesional from Medico WHERE id_Medico = ?";
-  var query = req.app.mysql.format(sql, [req.params.id | 1]);
+  var sql = "SELECT me.id_Persona, me.id_Medico, me.especialidad, me.cedula_profesional, "+
+            "pe.nombre, pe.apellido_paterno, pe.apellido_materno, pe.tipo " +
+            "FROM Medico me INNER JOIN Persona pe ON me.id_Persona = pe.id_Persona " +
+            "WHERE me.id_Medico = ?";
+  console.log("ID:" + req.params.id);
+  var query = req.app.mysql.format(sql, [req.params.id || 1]);
   console.log(req.params.id);
   req.app.mysql.query(query, function(err, rows, fields){
     if(err){
