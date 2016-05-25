@@ -81,8 +81,9 @@ body {
 }
 
 .navbar-top-links .dropdown-user {
-    right: 0;
-    left: auto;
+    /*right: 0;
+    left: auto;*/
+    margin-left: 5px;
 }
 
 .sidebar .sidebar-nav.navbar-collapse {
