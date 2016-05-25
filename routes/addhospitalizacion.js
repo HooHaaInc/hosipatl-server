@@ -4,15 +4,27 @@ var router = express.Router();
 /* GET /addpaciente . */
 router.get('/', function(req, res, next) {
   //if logged
-  var q = "SELECT id_Persona, id_Paciente, nombre FROM Paciente";
-  req.app.mysql.query(q, function(err, rows, fields){
-    var locals = {
-      query: {rows: rows, fields: fields}
-    };
-    res.render("")
+  var q = "SELECT pe.id_Persona, pa.id_Paciente, pe.nombre FROM Paciente pa INNER JOIN Persona pe ON pa.id_Persona = pe.id_Persona";
+  var q1 = "SELECT pe.id_Persona, me.id_Medico, pe.nombre FROM Medico me INNER JOIN Persona pe ON me.id_Persona = pe.id_Persona";
+  var q2 = "SELECT id_Cama, id_Hab FROM Cama";
+  var q3 = "SELECT id_Sala, nombre_sala, id_Hab FROM Sala";
+  req.app.mysql.query(q+"; "+q1+"; "+q2+"; "+q3, function(err, results){
+    if(err){
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+      return;
+    }
+
+    console.log(results);
+
+    res.render("create_hospitalizacion", results, function(err, html){
+      res.send(html);
+    })
   });
 
-  res.render('create_hospitalizacion');
+  //res.render('create_hospitalizacion');
 
 });
 

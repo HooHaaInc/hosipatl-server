@@ -29,6 +29,7 @@ var tablepacientes = require('./routes/tablepacientes');
 var tabledoctores = require('./routes/tabledoctores');
 var viewpaciente = require('./routes/viewpaciente');
 var viewmedico = require('./routes/viewmedico');
+var addhospitalizacion = require('./routes/addhospitalizacion');
 
 /*
   visualizar views:
@@ -55,7 +56,8 @@ app.set('view engine', 'jade');
 app.mysql = mysql.createConnection({
   host     : 'localhost',
   user     : 'admin',
-  database : 'clinica'
+  database : 'clinica',
+  multipleStatements: true
 });
 
 app.mysql.connect();
@@ -79,6 +81,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/addpaciente', addpaciente);
 app.use('/adddoctor', adddoctor);
+app.use('/addhospitalizacion',addhospitalizacion);
 app.use('/tablepacientes', tablepacientes);
 app.use('/tabledoctores', tabledoctores);
 app.use('/viewpaciente', viewpaciente);
