@@ -1,6 +1,4 @@
-
 var express = require('express');
-
 var router = express.Router();
 
 /* GET /addpaciente . */
@@ -8,6 +6,7 @@ router.get('/', function(req, res, next) {
   //if logged
   res.render('create_paciente');
 });
+
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
@@ -53,5 +52,6 @@ router.post('/', function(req, res, next) {
     })
   });
 })
+
 
 module.exports = router;
