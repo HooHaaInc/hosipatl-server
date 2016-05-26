@@ -47,6 +47,7 @@ router.get('/:id', function(req, res, next) {
         tipo_hospitalizacion: rows[0].tipo_hospitalizacion,
         tipo_pago: rows[0].tipo_pago,
         id_Cama: rows[0].id_Cama,
+        id_Medico: rows[0].id_Medico,
         nombre_sala: rows[0].nombre_sala,
         idh: req.params.id,
         ids: rows[0].id_Servicio

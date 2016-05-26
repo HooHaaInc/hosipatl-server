@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   }
   var q = "SELECT pe.id_Persona, pa.id_Paciente, pe.nombre FROM Paciente pa INNER JOIN Persona pe ON pa.id_Persona = pe.id_Persona";
   var q1 = "SELECT pe.id_Persona, me.id_Medico, pe.nombre FROM Medico me INNER JOIN Persona pe ON me.id_Persona = pe.id_Persona";
-  var q2 = "SELECT c.id_Cama, c.id_Hab, s.id_Sala FROM Cama c INNER JOIN Sala s ON c.id_Hab= s.id_Hab";
+  var q2 = "SELECT c.id_Cama, c.id_Hab, s.id_Sala, s.nombre_sala FROM Cama c INNER JOIN Sala s ON c.id_Hab= s.id_Hab";
   var q3 = "SELECT * FROM Hospitalizacion h INNER JOIN Servicio s " +
       "ON h.id_Servicio = s.id_Servicio " +
       "WHERE id_Hospitalizacion = " + (req.query.id || -1);
@@ -77,7 +77,8 @@ router.post('/', function(req, res, next) {
         id_Servicio: result.insertId,
         id_Sala: camas[req.body.cama],
         id_Cama: req.body.cama,
-        fecha_ingreso: req.body.fecha,
+        fecha_ingreso: req.body.fecha_ingreso,
+        fecha_salida: req.body.fecha_salida || null,
         tipo_hospitalizacion: 1
       }
       sql = 'INSERT INTO Hospitalizacion SET ?';
@@ -115,7 +116,8 @@ function put(req, res, next) {
     tipo_pago: req.body.tipo_pago,
     id_Sala: camas[req.body.cama],
     id_Cama: req.body.cama,
-    fecha_ingreso: req.body.fecha,
+    fecha_ingreso: req.body.fecha_ingreso,
+    fecha_salida: req.body.fecha_salida,
     tipo_hospitalizacion: 1
   };
   var sql = 'UPDATE Servicio s JOIN Hospitalizacion h ON s.id_Servicio = h.id_Servicio SET ? WHERE h.id_Servicio = ' + req.body.id;

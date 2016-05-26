@@ -31,7 +31,7 @@ block content
                       label Cama
                       select.form-control(name="cama" required)
                         - for (var i = 0; i < results[2].length; i++)
-                          option(value=results[2][i].id_Cama, selected=results[3].length!=0&&results[3][0].id_Cama==results[2][i].id_Cama?"selected":false) #{results[2][i].id_Cama}
+                          option(value=results[2][i].id_Cama, selected=results[3].length!=0&&results[3][0].id_Cama==results[2][i].id_Cama?"selected":false) #{results[2][i].id_Cama + " - " + results[2][i].nombre_sala}
                     //-.form-group
                       label Sala
                       select.form-control(name="sala" required)
@@ -39,7 +39,10 @@ block content
                       tabtab option(value=results[3][i].id_Sala) #{results[3][i].nombre_sala}
                     .form-group
                       label Fecha de ingreso
-                      input.form-control(type="date", name="fecha", required, value=results[3].length!=0?results[3][0].fecha_ingreso.toISOString().substr(0, 10):false)
+                      input.form-control(type="date", name="fecha_ingreso", required, value=results[3].length!=0?results[3][0].fecha_ingreso.toISOString().substr(0, 10):false)
+                    .form-group
+                      label Fecha de salida
+                      input.form-control(type="date", name="fecha_salida", value=results[3].length!=0&&results[3][0].fecha_salida?results[3][0].fecha_salida.toISOString().substr(0, 10):false)
                     .form-group
                       label Forma de pago
                       input.form-control(type="text", name="tipo_pago", required, value=results[3].length!=0?results[3][0].tipo_pago:false)

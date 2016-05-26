@@ -11,10 +11,6 @@ block content
       .col-lg-12
       .panel.panel-default
         .panel-heading  Paciente
-          .pull-right
-            .btn-group
-              a#editar_paciente.btn.btn-default.btn-xs Editar
-              button#elimiar_paciente.btn.btn-default.btn-xs Eliminar
         .panel-body
           .row
             .col-lg-6
@@ -32,8 +28,7 @@ block content
         .panel-heading  Médico
           .pull-right
             .btn-group
-              a#editar_medico.btn.btn-default.btn-xs Editar
-              button#elimiar_medico.btn.btn-default.btn-xs Eliminar
+              a.btn.btn-default.btn-xs(href="/viewmedico/"+id_Medico) Ver
         .panel-body
           .row
             .col-lg-6
