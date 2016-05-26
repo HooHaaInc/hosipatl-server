@@ -39,11 +39,14 @@ router.get('/:id', function(req, res, next) {
       });
     }else{
       var locals = {
+        id_Medico: rows[0].id_Medico,
+        id_Persona: rows[0].id_Persona,
         nombre: rows[0].nombre,
         apellido_paterno: rows[0].apellido_paterno,
         apellido_materno: rows[0].apellido_materno,
         especialidad: rows[0].especialidad,
         cedula_profesional: rows[0].cedula_profesional
+        db: req.app.mysql
       }
       res.render("view_medico", locals, function(err, html){
         if(err)

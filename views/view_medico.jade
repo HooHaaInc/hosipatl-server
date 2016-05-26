@@ -30,3 +30,34 @@ block content
                   .form-group
                     label Cédula Profesional
                     p.form-control-static #{cedula_profesional}
+                .edit(align="right")
+                  button.btn.btn-default(type="submit" style="margin-right:10px" onClick="edit()") Editar
+                  script.
+                    function edit(){
+                      window.location.href = '/editmedico/#{id_Medico}'
+                    }
+                  button#eliminar.btn.btn-default(type="submit" style="margin-right:10px" onClick="elim()") Eliminar
+                  script.
+                    document.getElementById("eliminar").onclick = function(e){
+                        //window.location.href = '/editmedico/#{id_Medico}'
+                        var r = confirm("¿Seguro que desea eliminar el médico?")
+                        if(r){
+                          q1 = "DELETE FROM Persona WHERE id_Persona = " + #{id_Persona};
+                          q2 = "DELETE FROM Medico WHERE id_Medico = " + #{id_Medico};
+                          console.log(#{db});
+                          #{db}.query(q2, function(err, rows, fields){
+                            if(!err){
+                              #{db}.query(q1, function(err, rows, fields){
+                                if(!err){
+                                    res.redirect("/");
+                                }else{
+                                  console.log(error);
+                                }
+                              });
+                            }else{
+                              console.log(error);
+                            }
+                            });
+                        }
+
+                    }
