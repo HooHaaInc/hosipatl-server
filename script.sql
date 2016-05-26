@@ -338,7 +338,9 @@ ADD
 ALTER TABLE Hospitalizacion
 ADD
   FOREIGN KEY(id_Servicio)
-      REFERENCES Servicio(id_Servicio),
+      REFERENCES Servicio(id_Servicio)
+      ON UPDATE cascade
+      ON DELETE cascade,
 ADD
 
     FOREIGN KEY(id_Sala)

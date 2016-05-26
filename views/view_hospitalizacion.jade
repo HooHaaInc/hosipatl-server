@@ -76,9 +76,10 @@ block content
           .row
             .col-lg-6
               .pull-right
-                .btn-group
-                  a#editar.btn.btn-default(href="edithospotalizacion") Editar
-                  button#eliminar.btn.btn-default(data-id=id) Eliminar
+                form(action="/addhospitalizacion", method="GET", enctype="application/json")
+                  .btn-group
+                    button.btn.btn-default(name="id",value=idh, type="submit") Editar
+                    button#eliminar.btn.btn-default(data-idh=idh, data-ids=ids) Eliminar
 
 block footer
   include html/footer.html
@@ -89,14 +90,17 @@ block footer
         var xml = new XMLHttpRequest();
 
         xml.onreadystatechange = function(){
-          if (xml.readyState == 4 && xml.status == 200) {
-            //xml.responseText;
+          if (xml.readyState == 4) {
+            if(xml.status == 200)
+              window.document.location = "/";
+            else alert(xml.responseText);
           }
         }
 
         xml.open("DELETE", "/viewhospitalizacion", true);
         xml.setRequestHeader("Content-type", "application/json");
-        xml.send(JSON.stringify({id: $(e.target).data("id")}));
+        var body = {idh: $(e.target).data("idh"), ids:$(e.target).data("ids")};
+        xml.send(JSON.stringify(body));
 
       }
     }

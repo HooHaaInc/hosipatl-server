@@ -14,32 +14,34 @@ block content
               .row
                 .col-lg-12
                   form(action="/addhospitalizacion" method="POST" enctype="appplication/json")
+                    - if (results[3].length!=0)
+                      input(type="hidden" name="_method" value="put")
                     .form-group
                       label Paciente
                       //- maybe placeholder?
                       select.form-control(name="paciente" required)
                         - for (var i = 0; i < results[0].length; i++)
-                          option(value=results[0][i].id_Paciente) #{results[0][i].nombre}
+                          option(value=results[0][i].id_Paciente, selected=results[3].length!=0&&results[3][0].id_Paciente==results[0][i].id_Paciente?"selected":false) #{results[0][i].nombre}
                     .form-group
                       label Medico
                       select.form-control(name="medico" required)
                         - for (var i = 0; i < results[1].length; i++)
-                          option(value=results[1][i].id_Medico) #{results[1][i].nombre}
+                          option(value=results[1][i].id_Medico, selected=results[3].length!=0&&results[3][0].id_Medico==results[1][i].id_Medico?"selected":false) #{results[1][i].nombre}
                     .form-group
                       label Cama
                       select.form-control(name="cama" required)
                         - for (var i = 0; i < results[2].length; i++)
-                          option(value=results[2][i].id_Cama) #{results[2][i].id_Cama}
+                          option(value=results[2][i].id_Cama, selected=results[3].length!=0&&results[3][0].id_Cama==results[2][i].id_Cama?"selected":false) #{results[2][i].id_Cama}
                     //-.form-group
                       label Sala
                       select.form-control(name="sala" required)
                       tab - for (var i = 0; i < results[3].length; i++)
                       tabtab option(value=results[3][i].id_Sala) #{results[3][i].nombre_sala}
                     .form-group
-                      label Fecha ingreso
-                      input.form-control(type="date" name="fecha" required)
+                      label Fecha de ingreso
+                      input.form-control(type="date", name="fecha", required, value=results[3].length!=0?results[3][0].fecha_ingreso.toISOString().substr(0, 10):false)
                     .form-group
                       label Forma de pago
-                      input.form-control(type="text" name="tipo_pago" required)
+                      input.form-control(type="text", name="tipo_pago", required, value=results[3].length!=0?results[3][0].tipo_pago:false)
                     .form-group
-                      button.btn.btn-default(type="submit") Submit
+                      button.btn.btn-default(type="submit", name="id", value=results[3].length!=0?results[3][0].id_Servicio:-1) Submit
