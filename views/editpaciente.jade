@@ -6,7 +6,7 @@ block content
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header Edición del Medico
+        h1.page-header Edición del Paciente
     .row
       .col-lg-12
         .panel.panel-default
@@ -14,7 +14,7 @@ block content
           .panel-body
             .row
               .col-lg-6
-                form(action="/editmedico" method="POST" enctype="appplication/json")
+                form(action="/editpaciente" method="POST" enctype="appplication/json")
                   .form-group
                     label Nombre
                     input(class="form-control", name="nombre", value='#{nombre}')
@@ -25,10 +25,12 @@ block content
                     label Apellido Materno
                     input(class="form-control", name="apellidomaterno", value='#{apellido_materno}')
                   .form-group
-                    label Especialidad
-                    input(class="form-control", name="especialidad", value='#{especialidad}')
+                    label Entidad Servivio de Salud
+                    input(class="form-control", name="ess", value='#{entidad_serv_salud}')
                   .form-group
-                    label Cédula Profesional
-                    input(class="form-control", name="cedula", value='#{cedula_profesional}')
+                    .checkbox
+                      label
+                        input(type="checkbox", name="eps") 
+                        | EPS
                   .form-group
                     button.btn.btn-default(type="submit") Submit
