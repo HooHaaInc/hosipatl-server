@@ -21,11 +21,15 @@ router.get('/:id', function(req, res, next) {
       });
     }else{
       var locals = {
+        id_Medico: rows[0].id_Medico,
+        id_Persona: rows[0].id_Persona,
         nombre: rows[0].nombre,
         apellido_paterno: rows[0].apellido_paterno,
         apellido_materno: rows[0].apellido_materno,
         especialidad: rows[0].especialidad,
-        cedula_profesional: rows[0].cedula_profesional
+        cedula_profesional: rows[0].cedula_profesional,
+        idp: rows[0].id_Persona,
+        idm: rows[0].id_Medico
       }
       res.render("view_medico", locals, function(err, html){
         if(err)
@@ -37,6 +41,32 @@ router.get('/:id', function(req, res, next) {
       })
     }
   })
+});
+
+router.delete("/", function(req, res, next){
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
+  var sql1 = "DELETE FROM Medico WHERE id_Medico = ?";
+  var sql2 = "DELETE FROM Persona WHERE id_Persona = ?";
+  var q1 = req.app.mysql.format(sql1,req.body.idm);
+  var q2 = req.app.mysql.format(sql2, req.body.idp);
+  console.log(q1+ "\n"+q2);
+  req.app.mysql.query(q1+"; "+q2, function(err, result1){
+    if (!err){
+      /*req.app.mysql.query(q2, function(err, result2){
+          if(!err){
+            res.send(result2);
+          }else{
+            console.log(err);
+          }
+      });*/
+      res.send(result1);
+    }else{
+      console.log(err);
+    }
+  });
 });
 
 module.exports = router;
