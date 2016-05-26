@@ -4,11 +4,17 @@ var router = express.Router();
 /* GET /addpaciente . */
 router.get('/', function(req, res, next) {
   //if logged
-  res.render('create_doctor');
+  if(!req.session.email || !req.session.password)
+    res.redirect('../login');
+  else res.render('create_doctor');
 });
 
 
 router.post('/', function(req, res, next) {
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
   console.log(req.body);
   var datos = {
     nombre: req.body.nombre,

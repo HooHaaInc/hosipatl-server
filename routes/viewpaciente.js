@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:id', function(req, res, next) {
-
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
   console.log(req.params.id);
   //TODO: SELECT FROM Pacientes
   //recetas, servicios, expediente, hospitalizacion,

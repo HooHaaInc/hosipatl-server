@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:id', function(req, res, next) {
-
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
   console.log(req.params.id);
   //TODO: SELECT FROM Pacientes
   //recetas, servicios, expediente, hospitalizacion,
@@ -45,7 +48,8 @@ router.get('/:id', function(req, res, next) {
         tipo_pago: rows[0].tipo_pago,
         id_Cama: rows[0].id_Cama,
         nombre_sala: rows[0].nombre_sala,
-        id: req.params.id
+        idh: req.params.id,
+        ids: rows[0].id_Servicio
       }
       res.render("view_hospitalizacion", locals, function(err, html){
         if(err)
@@ -60,17 +64,17 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.delete("/", function(req, res, next) {
-  var sql = "DELETE FROM Hospitalizacion WHERE id_Hospitalizacion = ?";
-  var query = req.app.mysql.format(sql, [req.body.id]);
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
+  var sql = "DELETE FROM Servicio WHERE id_Servicio = ?";
+  var query = req.app.mysql.format(sql, [req.body.ids]);
   req.app.mysql.query(query, function(err, result){
     if(err)
-      res.render('error', {
-        message: err.message,
-        error: err
-      });
+      res.status(401).send(err);
     else{
-      console.log(result);
-      res.redirect("/");
+      res.send(result);
     }
   });
 });
