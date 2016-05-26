@@ -1,0 +1,44 @@
+extends ./layout.jade
+
+block content
+  block content
+    #page-wrapper
+      .row
+        .col-lg-12
+          h1.page-header Información del Paciente
+      .row
+        .col-lg-12
+          .panel.panel-default
+            .panel-heading Servicio
+              .panel-body
+                .row
+                  .col-lg-6
+                    .form-group
+                      label Tipo de Servicio
+                      select.form-control(name="nombre")
+                        - for(var i=0; i<catalogo.length; i++)
+                          option(value=catalogo[i].name) #{catalogo[i].name}
+                    .form-group
+                      label Costo
+                      p#costo_servicio.form-control-static
+
+          .panel.panel-default
+            .panel.panel-default
+              .panel-heading Cirugía
+                .panel-body
+                  .row
+                    .col-lg-6
+                      .form-group
+                          .checkbox
+                            label
+                              input(type="checkbox" name="eps" value="smn") Ambulatoria
+          .panel.panel-default
+            .panel.panel-default
+              .panel-heading Maquina
+                .panel-body
+                  .row
+                    .col-lg-6
+                      .form-group
+                          .checkbox
+                            label
+                              input(type="checkbox" name="eps" value="smn") Ambulatoria

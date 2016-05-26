@@ -1,0 +1,102 @@
+extends ./layout.jade
+//- locals = {
+  nombre_completo,
+  }
+block content
+  #page-wrapper
+    .row
+      .col-lg-12
+        h1.page-header Información de Hospitalización
+    .row
+      .col-lg-12
+      .panel.panel-default
+        .panel-heading  Paciente
+          .pull-right
+            .btn-group
+              a#editar_paciente.btn.btn-default.btn-xs Editar
+              button#elimiar_paciente.btn.btn-default.btn-xs Eliminar
+        .panel-body
+          .row
+            .col-lg-6
+              form(role="form")
+                .form-group
+                  label Nombre
+                  p.form-control-static #{nombre}
+                .form-group
+                  label Apellido Paterno
+                  p.form-control-static #{apellido_paterno}
+                .form-group
+                  label Apellido Materno
+                  p.form-control-static #{apellido_materno}
+      .panel.panel-default
+        .panel-heading  Médico
+          .pull-right
+            .btn-group
+              a#editar_medico.btn.btn-default.btn-xs Editar
+              button#elimiar_medico.btn.btn-default.btn-xs Eliminar
+        .panel-body
+          .row
+            .col-lg-6
+              form(role="form")
+                .form-group
+                  label Nombre
+                  p.form-control-static #{mnombre}
+                .form-group
+                  label Apellido Paterno
+                  p.form-control-static #{mapellido_paterno}
+                .form-group
+                  label Apellido Materno
+                  p.form-control-static #{mapellido_materno}
+      .panel.panel-default
+        .panel-heading
+        .panel-body
+          .row
+            .col-lg-6
+              form(role="form")
+                .form-group
+                  label Fecha de Ingreso
+                  p.form-control-static #{fecha_ingreso}
+                .form-group
+                  label Fecha de Salida
+                  p.form-control-static #{fecha_salida}
+                .form-group
+                  label Tipo de Hospitalización
+                  p.form-control-static #{tipo_hospitalizacion}
+                .form-group
+                  label Tipo de Pago
+                  p.form-control-static #{tipo_pago}
+                .form-group
+                  label Sala
+                  p.form-control-static #{nombre_sala}
+                .form-group
+                  label Cama
+                  p.form-control-static #{id_Cama}
+      .panel.panel-default
+        .panel-body
+          .row
+            .col-lg-6
+              .pull-right
+                .btn-group
+                  a#editar.btn.btn-default(href="edithospotalizacion") Editar
+                  button#eliminar.btn.btn-default(data-id=id) Eliminar
+
+block footer
+  include html/footer.html
+  script.
+    document.getElementById("eliminar").onclick = function(e){
+      var r = confirm("¿Seguro que desea eliminar la hospitalización?")
+      if(r){
+        var xml = new XMLHttpRequest();
+
+        xml.onreadystatechange = function(){
+          if (xml.readyState == 4 && xml.status == 200) {
+            //xml.responseText;
+          }
+        }
+
+        xml.open("DELETE", "/viewhospitalizacion", true);
+        xml.setRequestHeader("Content-type", "application/json");
+        xml.send(JSON.stringify({id: $(e.target).data("id")}));
+
+      }
+    }

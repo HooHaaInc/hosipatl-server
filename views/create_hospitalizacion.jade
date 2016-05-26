@@ -4,7 +4,7 @@ block content
   #page-wrapper
     .row
       .col-lg-12
-        h1.page-header #{page_title}
+        h1.page-header Añadir Hospitalización
     .row
       .col-lg-12
           .panel.panel-default
@@ -13,7 +13,33 @@ block content
             .panel-body
               .row
                 .col-lg-12
-                  select.form-controller(name="paciente")
-                    - for (var i = 0; i < array.length; i++) {
-                      array[i]
-                    }
+                  form(action="/addhospitalizacion" method="POST" enctype="appplication/json")
+                    .form-group
+                      label Paciente
+                      //- maybe placeholder?
+                      select.form-control(name="paciente" required)
+                        - for (var i = 0; i < results[0].length; i++)
+                          option(value=results[0][i].id_Paciente) #{results[0][i].nombre}
+                    .form-group
+                      label Medico
+                      select.form-control(name="medico" required)
+                        - for (var i = 0; i < results[1].length; i++)
+                          option(value=results[1][i].id_Medico) #{results[1][i].nombre}
+                    .form-group
+                      label Cama
+                      select.form-control(name="cama" required)
+                        - for (var i = 0; i < results[2].length; i++)
+                          option(value=results[2][i].id_Cama) #{results[2][i].id_Cama}
+                    //-.form-group
+                      label Sala
+                      select.form-control(name="sala" required)
+                      tab - for (var i = 0; i < results[3].length; i++)
+                      tabtab option(value=results[3][i].id_Sala) #{results[3][i].nombre_sala}
+                    .form-group
+                      label Fecha ingreso
+                      input.form-control(type="date" name="fecha" required)
+                    .form-group
+                      label Forma de pago
+                      input.form-control(type="text" name="tipo_pago" required)
+                    .form-group
+                      button.btn.btn-default(type="submit") Submit

@@ -30,3 +30,35 @@ block content
                   .form-group
                     label EPS
                     p.form-control-static #{eps}
+        .panel.panel-default
+          .panel-heading
+          .panel-body
+            .dataTable_wrapper
+              table.table.table-striped.table-bordered.table-hover(id="dataTables-example")
+                thead
+                  tr
+                    th Médico
+                    th Tipo de Hospitalización
+                    th Fecha de Ingreso
+                    th Fecha de Salida
+                    th Sala
+                    th Cama
+                    th Tipo de Pago
+
+                tbody
+                  - for(var i=0; i<rows.length; i++)
+                    tr(class=i%2==0?"even gradeA clickable-row":"odd gradeA clickable-row", data-id=rows[i].id_Hospitalizacion)
+                      th #{rows[i]["mnombre"] + " " + rows[i]["mapellido_paterno"] + " " + rows[i]["mapellido_materno"]}
+                      th #{rows[i]["tipo_hospitalizacion"]}
+                      th #{rows[i]["fecha_ingreso"]}
+                      th #{rows[i]["fecha_salida"]}
+                      th #{rows[i]["nombre_sala"]}
+                      th #{rows[i]["id_Cama"]}
+                      th #{rows[i]["tipo_pago"]}
+
+block footer
+  include html/tables_footer.html
+  script.
+    $(".clickable-row").click(function() {
+        window.document.location = "/viewhospitalizacion/" + $(this).data("id");
+    });

@@ -14,15 +14,15 @@ router.get('/:id', function(req, res, next) {
       "sa.id_Sala, sa.id_Medico AS Sala_id_Medico, sa.id_Hab AS Sala_id_Hab, sa.nombre_sala, sa.numero_camas, " +
       "c.id_Cama, c.id_Hab AS cid_Hab, c.tipo, c.descripcion, " +
       "s.id_Servicio, s.tipo_servicio, s.tipo_pago, s.fecha_servicio " +
-      "FROM Paciente p " +
-      "INNER JOIN Persona pe ON p.id_Persona = pe.id_Persona " +
-      "LEFT OUTER JOIN Servicio s ON p.id_Paciente = s.id_Paciente " +
-      "LEFT OUTER JOIN Hospitalizacion h ON h.id_Servicio = s.id_Servicio " +
+      "FROM Hospitalizacion h " +
+      "INNER JOIN Servicio s ON h.id_Servicio = h.id_Servicio " +
+      "LEFT OUTER JOIN Paciente p ON p.id_Paciente = s.id_Paciente " +
+      "LEFT OUTER JOIN Persona pe ON pe.id_Persona = p.id_Persona " +
       "LEFT OUTER JOIN Medico m ON s.id_Medico = m.id_Medico " +
       "LEFT OUTER JOIN Persona pm ON pm.id_Persona = m.id_Persona " +
       "LEFT OUTER JOIN Sala sa ON h.id_Sala = sa.id_Sala " +
       "LEFT OUTER JOIN Cama c ON h.id_Cama = c.id_Cama " +
-      "WHERE p.id_Paciente = ?";
+      "WHERE h.id_Hospitalizacion = ?";
   var query = req.app.mysql.format(sql, [req.params.id || 1]);
   req.app.mysql.query(query, function(err, rows, fields){
     console.log("rows: ", rows);
@@ -36,11 +36,18 @@ router.get('/:id', function(req, res, next) {
         nombre: rows[0].nombre,
         apellido_paterno: rows[0].apellido_paterno,
         apellido_materno: rows[0].apellido_materno,
-        entidad_serv_salud: rows[0].entidad_serv_salud,
-        eps: rows[0].eps ? "si" : "no",
-        rows: rows
+        mnombre: rows[0].mnombre,
+        mapellido_paterno: rows[0].mapellido_paterno,
+        mapellido_materno: rows[0].mapellido_materno,
+        fecha_ingreso: rows[0].fecha_ingreso,
+        fecha_salida: rows[0].fecha_salida,
+        tipo_hospitalizacion: rows[0].tipo_hospitalizacion,
+        tipo_pago: rows[0].tipo_pago,
+        id_Cama: rows[0].id_Cama,
+        nombre_sala: rows[0].nombre_sala,
+        id: req.params.id
       }
-      res.render("view_paciente", locals, function(err, html){
+      res.render("view_hospitalizacion", locals, function(err, html){
         if(err)
           res.render('error', {
             message: err.message,
@@ -50,6 +57,22 @@ router.get('/:id', function(req, res, next) {
       })
     }
   })
+});
+
+router.delete("/", function(req, res, next) {
+  var sql = "DELETE FROM Hospitalizacion WHERE id_Hospitalizacion = ?";
+  var query = req.app.mysql.format(sql, [req.body.id]);
+  req.app.mysql.query(query, function(err, result){
+    if(err)
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+    else{
+      console.log(result);
+      res.redirect("/");
+    }
+  });
 });
 
 module.exports = router;
