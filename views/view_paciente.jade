@@ -30,6 +30,13 @@ block content
                   .form-group
                     label EPS
                     p.form-control-static #{eps}
+                  .edit(align="right")
+                    a.btn.btn-default(href="/editpaciente/"+idpa) Editar
+                    script.
+                      function edit(){
+                        window.document.location = '/editpaciente/#{id_Paciente}'
+                      }
+                    button#eliminar.btn.btn-default(data-idm=idpa, data-idp=idp) Eliminar
         .panel.panel-default
           .panel-heading Hospitalizaciones
           .panel-body
@@ -63,3 +70,25 @@ block footer
     $(".clickable-row").click(function() {
         window.document.location = "/viewhospitalizacion/" + $(this).data("id");
     });
+    
+  script.
+    document.getElementById("eliminar").onclick = function(e){
+      var r = confirm("¿Seguro que desea eliminar este paciente?")
+      if(r){
+        var xml = new XMLHttpRequest();
+
+        xml.onreadystatechange = function(){
+          if (xml.readyState == 4) {
+            if(xml.status == 200)
+              window.document.location = "/";
+            else alert(xml.responseText);
+          }
+        }
+
+        xml.open("DELETE", "/viewpaciente", true);
+        xml.setRequestHeader("Content-type", "application/json");
+        var body = {idpa: $(e.target).data("idm"), idp:$(e.target).data("idp")};
+        xml.send(JSON.stringify(body));
+
+      }
+    }

@@ -36,11 +36,15 @@ router.get('/:id', function(req, res, next) {
       });
     }else{
       var locals = {
+        id_Paciente: rows[0].id_Paciente,
+        id_Persona: rows[0].id_Persona,
         nombre: rows[0].nombre,
         apellido_paterno: rows[0].apellido_paterno,
         apellido_materno: rows[0].apellido_materno,
         entidad_serv_salud: rows[0].entidad_serv_salud,
         eps: rows[0].eps ? "si" : "no",
+        idp: rows[0].id_Persona,
+        idpa: rows[0].id_Paciente,
         rows: rows
       }
       res.render("view_paciente", locals, function(err, html){
@@ -53,6 +57,25 @@ router.get('/:id', function(req, res, next) {
       })
     }
   })
+});
+
+router.delete("/", function(req, res, next) {
+  if(!req.session.email || !req.session.password){
+    res.redirect('../login');
+    return;
+  }
+  var sql1 = "DELETE FROM Paciente WHERE id_Paciente = ?";
+  var sql2 = "DELETE FROM Persona WHERE id_Persona = ?";
+  var q1 = req.app.mysql.format(sql1,req.body.idpa);
+  var q2 = req.app.mysql.format(sql2, req.body.idp);
+  console.log(q1+ "\n"+q2);
+  req.app.mysql.query(q1+"; "+q2, function(err, result1){
+    if (!err){
+      res.send(result1);
+    }else{
+      console.log(err);
+    }
+  });
 });
 
 module.exports = router;

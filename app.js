@@ -32,6 +32,7 @@ var viewmedico = require('./routes/viewmedico');
 var viewhospitalizacion = require('./routes/viewhospitalizacion');
 var addhospitalizacion = require('./routes/addhospitalizacion');
 var editmedico = require('./routes/editmedico');
+var editpaciente = require('./routes/editpaciente');
 
 /*
   visualizar views:
@@ -90,6 +91,7 @@ app.use('/viewpaciente', viewpaciente);
 app.use('/viewmedico', viewmedico);
 app.use('/viewhospitalizacion', viewhospitalizacion);
 app.use('/editmedico', editmedico);
+app.use('/editpaciente', editpaciente);
 
 app.use('/\*.jade', jaderouter);
 
