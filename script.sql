@@ -445,6 +445,13 @@ CREATE TABLE Usuario (
   PRIMARY KEY(id_usuario)
 )ENGINE=InnoDB;
 
+
+CREATE USER IF NOT EXISTS 'admin'@'localhost';
+CREATE USER IF NOT EXISTS 'admin'@'%';
+GRANT ALL PRIVILEGES ON clinica.* TO 'admin'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON clinica.* TO 'admin'@'%' WITH GRANT OPTION;
+
+
 INSERT INTO Usuario(nombre, pasw) VALUES("erik@hoohaa.com", "tacoswe");
 INSERT INTO Usuario(nombre, pasw) VALUES("neto@hoohaa.com", "pera12");
 INSERT INTO Usuario(nombre, pasw) VALUES("jorge@nintendo.com", "mauricioydiego");
@@ -465,7 +472,7 @@ INSERT INTO Habitacion SET ventana=0,id_propietario=3, id_ocupante=1, valor_hab=
 INSERT INTO Habitacion SET ventana=1,id_propietario=3, id_ocupante=2, valor_hab=100, piso=2;
 
 INSERT INTO Sala SET id_Medico=1, id_Hab=1, nombre_sala="habitacion del tiempo", numero_camas=1;
-INSERT INTO Sala SET id_Medico=2, id_Hab=2, nombre_sala="urgencias", numero_camas=2;
+INSERT INTO Sala SET id_Medico=1, id_Hab=2, nombre_sala="urgencias", numero_camas=2;
 
 INSERT INTO Cama SET id_Hab=1, tipo="slipin", descripcion="incomodo";
 INSERT INTO Cama SET id_Hab=2, tipo="camilla", descripcion="2/3";
